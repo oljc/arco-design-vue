@@ -1,4 +1,4 @@
-name: pr_check
+name: build_size
 on:
   pull_request:
     types: [ opened, synchronize, reopened ]
@@ -29,5 +29,4 @@ jobs:
         with:
           repo-token: '${{ secrets.GITHUB_TOKEN }}'
           build-script: 'build:component'
-          # 在packages/web-vue 目录下
           pattern: './packages/web-vue/{dist,es,lib,icon}/**/*.{js,css}'
