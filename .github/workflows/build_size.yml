@@ -1,0 +1,33 @@
+name: pr_check
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [ 16.x ]
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@master
+
+      - name: setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - run: yarn install
+
+      - run: npm run init
+
+      - name: report-compressed-size
+        uses: preactjs/compressed-size-action@v2
+        with:
+          repo-token: '${{ secrets.GITHUB_TOKEN }}'
+          build-script: 'build:component'
+          # 在packages/web-vue 目录下
+          pattern: './packages/web-vue/{dist,es,lib,icon}/**/*.{js,css}'
