@@ -7,23 +7,19 @@ jobs:
   setup:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [ 16.x ]
-
     steps:
       - name: checkout
         uses: actions/checkout@master
 
       - name: setup node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 20
           cache: 'yarn'
 
       - run: yarn install
 
-      - run: npm run build:component
+      - run: npm run init
 
       - name: report-compressed-size
         uses: preactjs/compressed-size-action@v2
