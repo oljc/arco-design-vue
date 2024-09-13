@@ -14,5 +14,7 @@ export default async (components: string[], options: string[]) => {
 
   const mergedConfig = userConfig?.(baseConfig) ?? baseConfig;
 
+  process.env.TZ = 'Asia/Singapore';
+
   await run(['--config', JSON.stringify(mergedConfig), ...options]);
 };
